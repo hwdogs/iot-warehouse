@@ -1,9 +1,13 @@
 package com.example.iotwarehouse.entity;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
+import lombok.Data;
 
 import java.io.Serializable;
+
 /**
  * <p>
  * 
@@ -12,6 +16,7 @@ import java.io.Serializable;
  * @author hwshou
  * @since 2025-04-21
  */
+@Data
 public class Inventory implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -23,47 +28,14 @@ public class Inventory implements Serializable {
 
     private Integer shelfId;
 
+    /**
+     * 库存数量
+     */
     private Integer quantity;
 
-    public Integer getInventoryId() {
-        return inventoryId;
-    }
-
-    public void setInventoryId(Integer inventoryId) {
-        this.inventoryId = inventoryId;
-    }
-
-    public Integer getGoodsId() {
-        return goodsId;
-    }
-
-    public void setGoodsId(Integer goodsId) {
-        this.goodsId = goodsId;
-    }
-
-    public Integer getShelfId() {
-        return shelfId;
-    }
-
-    public void setShelfId(Integer shelfId) {
-        this.shelfId = shelfId;
-    }
-
-    public Integer getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
-    }
-
-    @Override
-    public String toString() {
-        return "Inventory{" +
-            "inventoryId = " + inventoryId +
-            ", goodsId = " + goodsId +
-            ", shelfId = " + shelfId +
-            ", quantity = " + quantity +
-        "}";
-    }
+    /**
+     * 0：存在，1：逻辑删除
+     */
+    @TableField(fill = FieldFill.INSERT)
+    private Integer deleted = 0;
 }

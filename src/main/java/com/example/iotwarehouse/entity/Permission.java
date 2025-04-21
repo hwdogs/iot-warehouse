@@ -1,7 +1,10 @@
 package com.example.iotwarehouse.entity;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
+import lombok.Data;
 
 import java.io.Serializable;
 /**
@@ -12,6 +15,7 @@ import java.io.Serializable;
  * @author hwshou
  * @since 2025-04-21
  */
+@Data
 public class Permission implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -26,36 +30,9 @@ public class Permission implements Serializable {
 
     private String module;
 
-    public Integer getPermId() {
-        return permId;
-    }
-
-    public void setPermId(Integer permId) {
-        this.permId = permId;
-    }
-
-    public String getPermName() {
-        return permName;
-    }
-
-    public void setPermName(String permName) {
-        this.permName = permName;
-    }
-
-    public String getModule() {
-        return module;
-    }
-
-    public void setModule(String module) {
-        this.module = module;
-    }
-
-    @Override
-    public String toString() {
-        return "Permission{" +
-            "permId = " + permId +
-            ", permName = " + permName +
-            ", module = " + module +
-        "}";
-    }
+    /**
+     * 0：存在，1：逻辑删除
+     */
+    @TableField(fill = FieldFill.INSERT)
+    private Integer deleted = 0;
 }

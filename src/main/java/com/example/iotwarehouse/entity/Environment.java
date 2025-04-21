@@ -1,12 +1,16 @@
 package com.example.iotwarehouse.entity;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.github.jeffreyning.mybatisplus.anno.MppMultiId;
+
+import lombok.Data;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+
 /**
  * <p>
  * 
@@ -15,6 +19,7 @@ import java.time.LocalDateTime;
  * @author hwshou
  * @since 2025-04-21
  */
+@Data
 public class Environment implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -24,52 +29,38 @@ public class Environment implements Serializable {
     private Integer sensorId;
 
     @MppMultiId
-    @TableField("timestamp")
+    @TableField(fill = FieldFill.INSERT)
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private LocalDateTime timestamp;
 
+    /**
+     * 温度
+     */
     private BigDecimal temperature;
 
+    /**
+     * 湿度
+     */
     private BigDecimal humidity;
 
-    public Integer getSensorId() {
-        return sensorId;
-    }
+    /**
+     * 光照强度
+     */
+    private Integer light;
 
-    public void setSensorId(Integer sensorId) {
-        this.sensorId = sensorId;
-    }
+    /**
+     * 气体数据
+     */
+    private String gas;
 
-    public LocalDateTime getTimestamp() {
-        return timestamp;
-    }
+    /**
+     * 注释
+     */
+    private String note;
 
-    public void setTimestamp(LocalDateTime timestamp) {
-        this.timestamp = timestamp;
-    }
-
-    public BigDecimal getTemperature() {
-        return temperature;
-    }
-
-    public void setTemperature(BigDecimal temperature) {
-        this.temperature = temperature;
-    }
-
-    public BigDecimal getHumidity() {
-        return humidity;
-    }
-
-    public void setHumidity(BigDecimal humidity) {
-        this.humidity = humidity;
-    }
-
-    @Override
-    public String toString() {
-        return "Environment{" +
-            "sensorId = " + sensorId +
-            ", timestamp = " + timestamp +
-            ", temperature = " + temperature +
-            ", humidity = " + humidity +
-        "}";
-    }
+    /**
+     * 0：存在，1：逻辑删除
+     */
+    @TableField(fill = FieldFill.INSERT)
+    private Integer deleted = 0;
 }

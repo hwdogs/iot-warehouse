@@ -1,7 +1,10 @@
 package com.example.iotwarehouse.entity;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
+import lombok.Data;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -13,6 +16,7 @@ import java.math.BigDecimal;
  * @author hwshou
  * @since 2025-04-21
  */
+@Data
 public class Shelf implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -33,63 +37,9 @@ public class Shelf implements Serializable {
      */
     private Integer capacity;
 
-    public Integer getShelfId() {
-        return shelfId;
-    }
-
-    public void setShelfId(Integer shelfId) {
-        this.shelfId = shelfId;
-    }
-
-    public Integer getWarehouseId() {
-        return warehouseId;
-    }
-
-    public void setWarehouseId(Integer warehouseId) {
-        this.warehouseId = warehouseId;
-    }
-
-    public BigDecimal getPositionX() {
-        return positionX;
-    }
-
-    public void setPositionX(BigDecimal positionX) {
-        this.positionX = positionX;
-    }
-
-    public BigDecimal getPositionY() {
-        return positionY;
-    }
-
-    public void setPositionY(BigDecimal positionY) {
-        this.positionY = positionY;
-    }
-
-    public BigDecimal getPositionZ() {
-        return positionZ;
-    }
-
-    public void setPositionZ(BigDecimal positionZ) {
-        this.positionZ = positionZ;
-    }
-
-    public Integer getCapacity() {
-        return capacity;
-    }
-
-    public void setCapacity(Integer capacity) {
-        this.capacity = capacity;
-    }
-
-    @Override
-    public String toString() {
-        return "Shelf{" +
-            "shelfId = " + shelfId +
-            ", warehouseId = " + warehouseId +
-            ", positionX = " + positionX +
-            ", positionY = " + positionY +
-            ", positionZ = " + positionZ +
-            ", capacity = " + capacity +
-        "}";
-    }
+    /**
+     * 0：存在，1：逻辑删除
+     */
+    @TableField(fill = FieldFill.INSERT)
+    private Integer deleted = 0;
 }

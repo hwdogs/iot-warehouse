@@ -1,9 +1,14 @@
 package com.example.iotwarehouse.entity;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
+
+import lombok.Data;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+
 /**
  * <p>
  * 
@@ -12,6 +17,7 @@ import java.time.LocalDate;
  * @author hwshou
  * @since 2025-04-21
  */
+@Data
 public class Device implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -25,45 +31,9 @@ public class Device implements Serializable {
 
     private LocalDate lastMaintenance;
 
-    public Integer getDeviceId() {
-        return deviceId;
-    }
-
-    public void setDeviceId(Integer deviceId) {
-        this.deviceId = deviceId;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public LocalDate getLastMaintenance() {
-        return lastMaintenance;
-    }
-
-    public void setLastMaintenance(LocalDate lastMaintenance) {
-        this.lastMaintenance = lastMaintenance;
-    }
-
-    @Override
-    public String toString() {
-        return "Device{" +
-            "deviceId = " + deviceId +
-            ", type = " + type +
-            ", status = " + status +
-            ", lastMaintenance = " + lastMaintenance +
-        "}";
-    }
+    /**
+     * 0：存在，1：逻辑删除
+     */
+    @TableField(fill = FieldFill.INSERT)
+    private Integer deleted = 0;
 }

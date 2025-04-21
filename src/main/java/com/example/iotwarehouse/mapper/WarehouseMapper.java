@@ -5,7 +5,7 @@ import com.example.iotwarehouse.entity.Warehouse;
 
 /**
  * <p>
- *  Mapper 接口
+ * Mapper 接口
  * </p>
  *
  * @author hwshou
@@ -14,4 +14,3 @@ import com.example.iotwarehouse.entity.Warehouse;
 public interface WarehouseMapper extends BaseMapper<Warehouse> {
 
 }
-
