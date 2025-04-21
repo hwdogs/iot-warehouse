@@ -3,15 +3,15 @@ package com.example.iotwarehouse.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.iotwarehouse.common.ResultCode;
+import com.example.iotwarehouse.common.UserLogin;
 import com.example.iotwarehouse.entity.User;
 import com.example.iotwarehouse.common.UserSearch;
 import com.example.iotwarehouse.mapper.UserMapper;
+import com.example.iotwarehouse.service.IUserService;
 import com.example.iotwarehouse.util.ResultUtil;
 import jakarta.annotation.Resource;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import jakarta.servlet.http.HttpSession;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -106,5 +106,42 @@ public class UserController {
         List<User> users = userMapper.selectList(page, wrapper);//多条件分页后的数据
         System.out.println("总记录数："+page.getTotal());
         return ResultUtil.isSuccess(users);
+    }
+
+
+
+    @Resource
+    IUserService iUserService;
+
+    /**
+     * 登录接口
+     * @param userLogin UserLogin类
+     * @return ResultUtil
+     */
+    @PostMapping("/login")
+    public Object login(@RequestBody UserLogin userLogin) {
+        return iUserService.loginLogic(userLogin.getUsername(), userLogin.getPassword());
+    }
+
+    /**
+     * 注册接口
+     * @param user user类
+     * @return ResultUtil
+     */
+    @PostMapping("/register")
+    public Object register(@RequestBody User user) {
+        return iUserService.registerLogic(user);
+    }
+
+    /**
+     * 根据邮箱更新用户信息
+     * @param email 邮箱
+     * @param password 面膜
+     * @return ResultUtil
+     */
+    @PostMapping("/updateByEmail")
+    public Object updatePasswordByEmail(@RequestParam("email") String email,
+                                        @RequestParam("password") String password) {
+        return iUserService.updatePasswordByEmail(email, password);
     }
 }
