@@ -70,10 +70,22 @@
             <artifactId>mybatis-plus-generator</artifactId>
             <version>3.5.11</version>
         </dependency>
+        <!--MP分页查询依赖-->
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-jsqlparser</artifactId>
+            <version>3.5.11</version> <!-- 确保版本和 MyBatis Plus 主包一致 -->
+        </dependency>
         <!--FreeMarker 模板依赖-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-freemarker</artifactId>
+        </dependency>
+        <!--联合主键-->
+        <dependency>
+            <groupId>com.github.jeffreyning</groupId>
+            <artifactId>mybatisplus-plus</artifactId>
+            <version>1.7.5-RELEASE</version>
         </dependency>
 
     </dependencies>

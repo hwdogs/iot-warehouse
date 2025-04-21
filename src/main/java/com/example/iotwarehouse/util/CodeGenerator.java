@@ -14,7 +14,7 @@ import java.util.Collections;
  */
 public class CodeGenerator {
     public static void main(String[] args) {
-        String url="jdbc:mysql://localhost:3306/iot-warehouse";
+        String url="jdbc:mysql://localhost:3306/iot_warehouse";
         String username="root";
         String password="123456";
         FastAutoGenerator.create(url, username, password)
