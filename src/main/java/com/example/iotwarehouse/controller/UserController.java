@@ -34,7 +34,7 @@ public class UserController {
      * 
      * @return Result类
      */
-    @RequestMapping("/getAllUsers")
+    @GetMapping("/getAllUsers")
     public Object getAllUser() {
         List<User> users = userMapper.selectList(null);
         return ResultUtil.isSuccess(users);
@@ -94,7 +94,7 @@ public class UserController {
      * @param userSearch 查询类
      * @return ResultUtil
      */
-    @RequestMapping("/getAllUserByCon")
+    @GetMapping("/getAllUserByCon")
     public Object getAllUserByCon(@RequestBody UserSearch userSearch) {
         // 分页对象
         Page<User> page = new Page<>(userSearch.getPageNo(), userSearch.getPageSize());

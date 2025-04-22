@@ -1,3 +1,4 @@
+
 package com.example.iotwarehouse.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -36,7 +37,7 @@ public class WarehouseController {
      * 
      * @return Result类
      */
-    @RequestMapping("/getAllWarehouses")
+    @GetMapping("/getAllWarehouses")
     @Operation(summary = "获取所有仓库", description = "查询系统中所有仓库的信息")
     public Object getAllWarehouses() {
         List<Warehouse> warehouses = warehouseMapper.selectList(null);
@@ -52,10 +53,7 @@ public class WarehouseController {
      *         注意: location字段应使用"纬度 经度"格式字符串，例如: "31.2304 121.4737"
      */
     @PostMapping("/addWarehouse")
-    @Operation(
-            summary = "添加仓库",
-            description = "创建新的仓库，location字段使用'纬度 经度'格式"
-    )
+    @Operation(summary = "添加仓库", description = "创建新的仓库，location字段使用'纬度 经度'格式")
     public Object addWarehouse(@Parameter(description = "仓库信息") @RequestBody Warehouse warehouse) {
         int i = warehouseMapper.insert(warehouse);
         if (i == 1) {
@@ -107,7 +105,7 @@ public class WarehouseController {
      * @param warehouseSearch 查询类
      * @return ResultUtil
      */
-    @RequestMapping("/getAllWarehousesByCon")
+    @GetMapping("/getAllWarehousesByCon")
     @Operation(summary = "条件查询", description = "根据条件分页查询仓库信息")
     public Object getAllWarehousesByCon(@Parameter(description = "查询条件") @RequestBody WarehouseSearch warehouseSearch) {
         // 分页对象

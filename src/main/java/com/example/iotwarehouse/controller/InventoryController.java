@@ -32,7 +32,7 @@ public class InventoryController {
      * 
      * @return Result类
      */
-    @RequestMapping("/getAllInventories")
+    @GetMapping("/getAllInventories")
     public Object getAllInventories() {
         List<Inventory> inventories = inventoryMapper.selectList(null);
         return ResultUtil.isSuccess(inventories);
@@ -92,7 +92,7 @@ public class InventoryController {
      * @param inventorySearch 查询类
      * @return ResultUtil
      */
-    @RequestMapping("/getAllInventoriesByCon")
+    @GetMapping("/getAllInventoriesByCon")
     public Object getAllInventoriesByCon(@RequestBody InventorySearch inventorySearch) {
         // 分页对象
         Page<Inventory> page = new Page<>(inventorySearch.getPageNo(), inventorySearch.getPageSize());

@@ -32,7 +32,7 @@ public class GoodsController {
      * 
      * @return Result类
      */
-    @RequestMapping("/getAllGoods")
+    @GetMapping("/getAllGoods")
     public Object getAllGoods() {
         List<Goods> goodsList = goodsMapper.selectList(null);
         return ResultUtil.isSuccess(goodsList);
@@ -92,7 +92,7 @@ public class GoodsController {
      * @param goodsSearch 查询类
      * @return ResultUtil
      */
-    @RequestMapping("/getAllGoodsByCon")
+    @GetMapping("/getAllGoodsByCon")
     public Object getAllGoodsByCon(@RequestBody GoodsSearch goodsSearch) {
         // 分页对象
         Page<Goods> page = new Page<>(goodsSearch.getPageNo(), goodsSearch.getPageSize());

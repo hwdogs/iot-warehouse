@@ -32,7 +32,7 @@ public class PermissionController {
      * 
      * @return Result类
      */
-    @RequestMapping("/getAllPermissions")
+    @GetMapping("/getAllPermissions")
     public Object getAllPermissions() {
         List<Permission> permissions = permissionMapper.selectList(null);
         return ResultUtil.isSuccess(permissions);
@@ -92,7 +92,7 @@ public class PermissionController {
      * @param permissionSearch 查询类
      * @return ResultUtil
      */
-    @RequestMapping("/getAllPermissionsByCon")
+    @GetMapping("/getAllPermissionsByCon")
     public Object getAllPermissionsByCon(@RequestBody PermissionSearch permissionSearch) {
         // 分页对象
         Page<Permission> page = new Page<>(permissionSearch.getPageNo(), permissionSearch.getPageSize());

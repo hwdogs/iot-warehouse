@@ -32,7 +32,7 @@ public class OperationLogController {
      * 
      * @return Result类
      */
-    @RequestMapping("/getAllOperationLogs")
+    @GetMapping("/getAllOperationLogs")
     public Object getAllOperationLogs() {
         List<OperationLog> logs = operationLogMapper.selectList(null);
         return ResultUtil.isSuccess(logs);
@@ -92,7 +92,7 @@ public class OperationLogController {
      * @param operationLogSearch 查询类
      * @return ResultUtil
      */
-    @RequestMapping("/getAllOperationLogsByCon")
+    @GetMapping("/getAllOperationLogsByCon")
     public Object getAllOperationLogsByCon(@RequestBody OperationLogSearch operationLogSearch) {
         // 分页对象
         Page<OperationLog> page = new Page<>(operationLogSearch.getPageNo(), operationLogSearch.getPageSize());

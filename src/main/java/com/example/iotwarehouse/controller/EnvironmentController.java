@@ -6,7 +6,6 @@ import com.example.iotwarehouse.common.ResultCode;
 import com.example.iotwarehouse.common.EnvironmentSearch;
 import com.example.iotwarehouse.entity.Environment;
 import com.example.iotwarehouse.mapper.EnvironmentMapper;
-import com.example.iotwarehouse.service.IEnvironmentService;
 import com.example.iotwarehouse.util.ResultUtil;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
@@ -34,7 +33,7 @@ public class EnvironmentController {
      *
      * @return Result类
      */
-    @RequestMapping("/getAllEnvironments")
+    @GetMapping("/getAllEnvironments")
     public Object getAllEnvironments() {
         List<Environment> environments = environmentMapper.selectList(null);
         return ResultUtil.isSuccess(environments);
@@ -105,7 +104,7 @@ public class EnvironmentController {
      * @param environmentSearch 查询类
      * @return ResultUtil
      */
-    @RequestMapping("/getAllEnvironmentsByCon")
+    @GetMapping("/getAllEnvironmentsByCon")
     public Object getAllEnvironmentsByCon(@RequestBody EnvironmentSearch environmentSearch) {
         // 分页对象
         Page<Environment> page = new Page<>(environmentSearch.getPageNo(), environmentSearch.getPageSize());

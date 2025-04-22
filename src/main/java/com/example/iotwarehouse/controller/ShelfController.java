@@ -32,7 +32,7 @@ public class ShelfController {
      * 
      * @return Result类
      */
-    @RequestMapping("/getAllShelves")
+    @GetMapping("/getAllShelves")
     public Object getAllShelves() {
         List<Shelf> shelves = shelfMapper.selectList(null);
         return ResultUtil.isSuccess(shelves);
@@ -92,7 +92,7 @@ public class ShelfController {
      * @param shelfSearch 查询类
      * @return ResultUtil
      */
-    @RequestMapping("/getAllShelvesByCon")
+    @GetMapping("/getAllShelvesByCon")
     public Object getAllShelvesByCon(@RequestBody ShelfSearch shelfSearch) {
         // 分页对象
         Page<Shelf> page = new Page<>(shelfSearch.getPageNo(), shelfSearch.getPageSize());

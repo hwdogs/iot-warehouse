@@ -6,7 +6,6 @@ import com.example.iotwarehouse.common.ResultCode;
 import com.example.iotwarehouse.common.DeviceSearch;
 import com.example.iotwarehouse.entity.Device;
 import com.example.iotwarehouse.mapper.DeviceMapper;
-import com.example.iotwarehouse.service.IDeviceService;
 import com.example.iotwarehouse.util.ResultUtil;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
@@ -33,7 +32,7 @@ public class DeviceController {
      * 
      * @return Result类
      */
-    @RequestMapping("/getAllDevices")
+    @GetMapping("/getAllDevices")
     public Object getAllDevices() {
         List<Device> devices = deviceMapper.selectList(null);
         return ResultUtil.isSuccess(devices);
@@ -93,7 +92,7 @@ public class DeviceController {
      * @param deviceSearch 查询类
      * @return ResultUtil
      */
-    @RequestMapping("/getAllDevicesByCon")
+    @GetMapping("/getAllDevicesByCon")
     public Object getAllDevicesByCon(@RequestBody DeviceSearch deviceSearch) {
         // 分页对象
         Page<Device> page = new Page<>(deviceSearch.getPageNo(), deviceSearch.getPageSize());
