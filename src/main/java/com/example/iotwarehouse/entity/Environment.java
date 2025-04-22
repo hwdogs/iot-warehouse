@@ -29,7 +29,7 @@ public class Environment implements Serializable {
     private Integer sensorId;
 
     @MppMultiId
-    @TableField(fill = FieldFill.INSERT)
+    @TableField(value = "timestamp", fill = FieldFill.INSERT)
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private LocalDateTime timestamp;
 

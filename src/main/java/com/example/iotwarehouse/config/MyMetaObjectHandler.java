@@ -16,7 +16,7 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
     public void insertFill(MetaObject metaObject) {
         this.strictInsertFill(metaObject, "createTime", LocalDateTime.class, LocalDateTime.now());
         this.strictUpdateFill(metaObject, "updateTime", LocalDateTime.class, LocalDateTime.now());
-        // ÎªEnvironmentÊµÌåµÄtimestamp×Ö¶ÎÉèÖÃÄ¬ÈÏÖµ
+        // ä¸ºEnvironmentå®žä½“çš„timestampå­—æ®µè®¾ç½®é»˜è®¤å€¼
         this.strictInsertFill(metaObject, "timestamp", LocalDateTime.class, LocalDateTime.now());
     }
 

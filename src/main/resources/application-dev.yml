@@ -1,4 +1,5 @@
 server:
+  # 注释掉或者移除context-path配置以保证Knife4j能够正常访问
   servlet:
     context-path: /iot-warehouse
   port: 8080
@@ -21,3 +22,29 @@ mybatis-plus:
       logic-delete-field: deleted
       logic-delete-value: '1'
       logic-not-delete-value: '0'
+# springdoc-openapi项目配置
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html  # 自定义swagger-ui访问路径
+    tags-sorter: alpha
+    operations-sorter: alpha
+  api-docs:
+    path: /v3/api-docs  # swagger后端请求地址
+    enabled: true   # 是否开启文档功能
+  packages-to-scan: com.example.iotwarehouse.controller # 扫描的包路径
+  paths-to-match: /**  # 匹配的URL路径
+# knife4j的增强配置
+knife4j:
+  enable: true    # 开启knife4j
+  setting:
+    language: zh_cn   # 中文
+    swagger-model-name: 实体列表   # 默认为：Swagger Models
+    enable-swagger-models: true  # 启用SwaggerModels
+    enable-document-manage: true # 开启文档管理功能
+    enable-version: false  # 不开启版本控制
+    enable-footer: false  # 不显示页脚
+  documents:
+    - group: IOT-Warehouse平台接口
+      name: 使用手册
+      locations: classpath:markdown/*
+

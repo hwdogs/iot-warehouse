@@ -7,6 +7,9 @@ import com.example.iotwarehouse.common.WarehouseSearch;
 import com.example.iotwarehouse.entity.Warehouse;
 import com.example.iotwarehouse.mapper.WarehouseMapper;
 import com.example.iotwarehouse.util.ResultUtil;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,7 +17,7 @@ import java.util.List;
 
 /**
  * <p>
- * 前端控制器
+ * 仓库管理前端控制器
  * </p>
  *
  * @author hwshou
@@ -22,6 +25,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/warehouse")
+@Tag(name = "仓库管理", description = "仓库信息的增删改查操作")
 public class WarehouseController {
 
     @Resource
@@ -33,6 +37,7 @@ public class WarehouseController {
      * @return Result类
      */
     @RequestMapping("/getAllWarehouses")
+    @Operation(summary = "获取所有仓库", description = "查询系统中所有仓库的信息")
     public Object getAllWarehouses() {
         List<Warehouse> warehouses = warehouseMapper.selectList(null);
         return ResultUtil.isSuccess(warehouses);
@@ -47,7 +52,11 @@ public class WarehouseController {
      *         注意: location字段应使用"纬度 经度"格式字符串，例如: "31.2304 121.4737"
      */
     @PostMapping("/addWarehouse")
-    public Object addWarehouse(@RequestBody Warehouse warehouse) {
+    @Operation(
+            summary = "添加仓库",
+            description = "创建新的仓库，location字段使用'纬度 经度'格式"
+    )
+    public Object addWarehouse(@Parameter(description = "仓库信息") @RequestBody Warehouse warehouse) {
         int i = warehouseMapper.insert(warehouse);
         if (i == 1) {
             return ResultUtil.isSuccess(ResultCode.ADD_SUCCESS.getMsg(), null);
@@ -65,7 +74,8 @@ public class WarehouseController {
      *         注意: location字段应使用"纬度 经度"格式字符串，例如: "31.2304 121.4737"
      */
     @PostMapping("/updateWarehouse")
-    public Object updateWarehouse(@RequestBody Warehouse warehouse) {
+    @Operation(summary = "更新仓库", description = "根据ID更新仓库信息，location字段使用'纬度 经度'格式")
+    public Object updateWarehouse(@Parameter(description = "仓库信息") @RequestBody Warehouse warehouse) {
         int i = warehouseMapper.updateById(warehouse);
         if (i == 1) {
             return ResultUtil.isSuccess(ResultCode.UPDATE_SUCCESS.getMsg(), null);
@@ -81,7 +91,8 @@ public class WarehouseController {
      * @return ResultUtil
      */
     @PostMapping("/delWarehouse")
-    public Object delWarehouse(Integer warehouseId) {
+    @Operation(summary = "删除仓库", description = "根据ID删除仓库")
+    public Object delWarehouse(@Parameter(description = "仓库ID") Integer warehouseId) {
         int i = warehouseMapper.deleteById(warehouseId);
         if (i == 1) {
             return ResultUtil.isSuccess(ResultCode.DELETE_SUCCESS.getMsg(), null);
@@ -97,7 +108,8 @@ public class WarehouseController {
      * @return ResultUtil
      */
     @RequestMapping("/getAllWarehousesByCon")
-    public Object getAllWarehousesByCon(@RequestBody WarehouseSearch warehouseSearch) {
+    @Operation(summary = "条件查询", description = "根据条件分页查询仓库信息")
+    public Object getAllWarehousesByCon(@Parameter(description = "查询条件") @RequestBody WarehouseSearch warehouseSearch) {
         // 分页对象
         Page<Warehouse> page = new Page<>(warehouseSearch.getPageNo(), warehouseSearch.getPageSize());
         // 条件构造器
