@@ -9,7 +9,10 @@ import io.swagger.v3.oas.annotations.media.Schema.RequiredMode;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.github.jeffreyning.mybatisplus.anno.MppMultiId;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -24,6 +27,9 @@ import java.time.LocalDateTime;
  * @since 2025-04-21
  */
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @TableName("environment")
 @Schema(description = "环境数据实体")
 public class Environment implements Serializable {

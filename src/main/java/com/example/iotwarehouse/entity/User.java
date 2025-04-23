@@ -1,11 +1,11 @@
 package com.example.iotwarehouse.entity;
 
-import com.baomidou.mybatisplus.annotation.FieldFill;
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.*;
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
@@ -18,6 +18,9 @@ import java.io.Serializable;
  * @since 2025-04-21
  */
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -54,7 +57,8 @@ public class User implements Serializable {
      * 0：存在，1：逻辑删除
      */
     @TableField(fill = FieldFill.INSERT)
+    @TableLogic
     @Schema(description = "逻辑删除", hidden = true, requiredMode = Schema.RequiredMode.REQUIRED)
-    private Integer deleted = 0;
+    private Integer deleted;
 
 }
