@@ -1,4 +1,4 @@
-package com.example.iotwarehouse.common;
+package com.example.iotwarehouse.common.request.userRequest;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.media.Schema.RequiredMode;
@@ -9,7 +9,7 @@ import lombok.Data;
  * @date 2025/4/21 13:59
  */
 @Data
-public class UserLogin {
+public class UserLoginRequest {
     @Schema(description = "用户名", requiredMode = RequiredMode.REQUIRED)
     private String username;
 
