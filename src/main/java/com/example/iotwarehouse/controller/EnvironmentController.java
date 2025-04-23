@@ -7,6 +7,9 @@ import com.example.iotwarehouse.common.EnvironmentSearch;
 import com.example.iotwarehouse.entity.Environment;
 import com.example.iotwarehouse.mapper.EnvironmentMapper;
 import com.example.iotwarehouse.util.ResultUtil;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,7 +18,7 @@ import java.util.List;
 
 /**
  * <p>
- * 前端控制器
+ * 环境监控前端控制器
  * </p>
  *
  * @author hwshou
@@ -23,6 +26,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/environment")
+@Tag(name = "环境监控", description = "环境数据的增删改查操作")
 public class EnvironmentController {
 
     @Resource
@@ -34,7 +38,8 @@ public class EnvironmentController {
      * @return Result类
      */
     @GetMapping("/getAllEnvironments")
-    public Object getAllEnvironments() {
+    @Operation(summary = "获取所有环境数据", description = "查询系统中所有环境监控的数据")
+    public ResultUtil getAllEnvironments() {
         List<Environment> environments = environmentMapper.selectList(null);
         return ResultUtil.isSuccess(environments);
     }
@@ -46,7 +51,8 @@ public class EnvironmentController {
      * @return Result类
      */
     @PostMapping("/addEnvironment")
-    public Object addEnvironment(@RequestBody Environment environment) {
+    @Operation(summary = "添加环境数据", description = "创建新的环境监控数据记录")
+    public ResultUtil addEnvironment(@Parameter(description = "环境数据信息") @RequestBody Environment environment) {
         // 设置当前时间作为时间戳，避免timestamp为null
         if (environment.getTimestamp() == null) {
             environment.setTimestamp(LocalDateTime.now());
@@ -66,7 +72,8 @@ public class EnvironmentController {
      * @return Result类
      */
     @PostMapping("/updateEnvironment")
-    public Object updateEnvironment(@RequestBody Environment environment) {
+    @Operation(summary = "更新环境数据", description = "根据传感器ID和时间戳更新环境数据信息")
+    public ResultUtil updateEnvironment(@Parameter(description = "环境数据信息") @RequestBody Environment environment) {
         QueryWrapper<Environment> wrapper = new QueryWrapper<>();
         wrapper.eq("sensor_id", environment.getSensorId())
                 .eq("timestamp", environment.getTimestamp());
@@ -86,7 +93,10 @@ public class EnvironmentController {
      * @return ResultUtil
      */
     @PostMapping("/delEnvironment")
-    public Object delEnvironment(Integer sensorId, String timestamp) {
+    @Operation(summary = "删除环境数据", description = "根据传感器ID和时间戳删除环境数据")
+    public ResultUtil delEnvironment(
+            @Parameter(description = "传感器ID") @RequestParam Integer sensorId,
+            @Parameter(description = "时间戳") @RequestParam String timestamp) {
         QueryWrapper<Environment> wrapper = new QueryWrapper<>();
         wrapper.eq("sensor_id", sensorId)
                 .eq("timestamp", timestamp);
@@ -105,7 +115,9 @@ public class EnvironmentController {
      * @return ResultUtil
      */
     @PostMapping("/getAllEnvironmentsByCon")
-    public Object getAllEnvironmentsByCon(@RequestBody EnvironmentSearch environmentSearch) {
+    @Operation(summary = "条件查询", description = "根据条件分页查询环境数据信息")
+    public ResultUtil getAllEnvironmentsByCon(
+            @Parameter(description = "查询条件") @RequestBody EnvironmentSearch environmentSearch) {
         // 分页对象
         Page<Environment> page = new Page<>(environmentSearch.getPageNo(), environmentSearch.getPageSize());
         // 条件构造器

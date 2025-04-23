@@ -37,7 +37,7 @@ public class Warehouse implements Serializable {
      * 仓库ID
      */
     @TableId(value = "warehouse_id", type = IdType.ASSIGN_ID)
-    @Schema(description = "雪花算法仓库ID",requiredMode = Schema.RequiredMode.REQUIRED)
+    @Schema(description = "雪花算法仓库ID", requiredMode = Schema.RequiredMode.REQUIRED)
     private Integer warehouseId;
 
     /**
@@ -57,17 +57,18 @@ public class Warehouse implements Serializable {
     /**
      * 面积（平方米）
      */
-    @Schema(description = "仓库面积",example = "250",requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+    @Schema(description = "仓库面积", example = "250", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
     private BigDecimal area;
 
-    @Schema(description = "仓库环境区（'常温区','冷链区','危险品区'）",example = "危险区",requiredMode = Schema.RequiredMode.REQUIRED)
+    @Schema(description = "仓库环境区", example = "危险区", allowableValues = { "常温区", "冷链区",
+            "危险品区" }, requiredMode = Schema.RequiredMode.REQUIRED)
     private String environmentZone;
 
     /**
      * 0：存在，1：逻辑删除
      */
     @TableField(fill = FieldFill.INSERT)
-    @Schema(description = "逻辑删除",hidden = true,requiredMode = Schema.RequiredMode.REQUIRED)
+    @Schema(description = "逻辑删除", hidden = true, requiredMode = Schema.RequiredMode.REQUIRED)
     private Integer deleted = 0;
 
     /**

@@ -7,6 +7,9 @@ import com.example.iotwarehouse.common.ShelfSearch;
 import com.example.iotwarehouse.entity.Shelf;
 import com.example.iotwarehouse.mapper.ShelfMapper;
 import com.example.iotwarehouse.util.ResultUtil;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,7 +17,7 @@ import java.util.List;
 
 /**
  * <p>
- * 前端控制器
+ * 货架管理前端控制器
  * </p>
  *
  * @author hwshou
@@ -22,6 +25,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/shelf")
+@Tag(name = "货架管理", description = "货架信息的增删改查操作")
 public class ShelfController {
 
     @Resource
@@ -33,7 +37,8 @@ public class ShelfController {
      * @return Result类
      */
     @GetMapping("/getAllShelves")
-    public Object getAllShelves() {
+    @Operation(summary = "获取所有货架", description = "查询系统中所有货架的信息")
+    public ResultUtil getAllShelves() {
         List<Shelf> shelves = shelfMapper.selectList(null);
         return ResultUtil.isSuccess(shelves);
     }
@@ -45,7 +50,8 @@ public class ShelfController {
      * @return Result类
      */
     @PostMapping("/addShelf")
-    public Object addShelf(@RequestBody Shelf shelf) {
+    @Operation(summary = "添加货架", description = "创建新的货架")
+    public ResultUtil addShelf(@Parameter(description = "货架信息") @RequestBody Shelf shelf) {
         int i = shelfMapper.insert(shelf);
         if (i == 1) {
             return ResultUtil.isSuccess(ResultCode.ADD_SUCCESS.getMsg(), null);
@@ -61,7 +67,8 @@ public class ShelfController {
      * @return Result类
      */
     @PostMapping("/updateShelf")
-    public Object updateShelf(@RequestBody Shelf shelf) {
+    @Operation(summary = "更新货架", description = "根据ID更新货架信息")
+    public ResultUtil updateShelf(@Parameter(description = "货架信息") @RequestBody Shelf shelf) {
         int i = shelfMapper.updateById(shelf);
         if (i == 1) {
             return ResultUtil.isSuccess(ResultCode.UPDATE_SUCCESS.getMsg(), null);
@@ -77,7 +84,8 @@ public class ShelfController {
      * @return ResultUtil
      */
     @PostMapping("/delShelf")
-    public Object delShelf(Integer shelfId) {
+    @Operation(summary = "删除货架", description = "根据ID删除货架")
+    public ResultUtil delShelf(@Parameter(description = "货架ID") @RequestParam Integer shelfId) {
         int i = shelfMapper.deleteById(shelfId);
         if (i == 1) {
             return ResultUtil.isSuccess(ResultCode.DELETE_SUCCESS.getMsg(), null);
@@ -93,7 +101,8 @@ public class ShelfController {
      * @return ResultUtil
      */
     @PostMapping("/getAllShelvesByCon")
-    public Object getAllShelvesByCon(@RequestBody ShelfSearch shelfSearch) {
+    @Operation(summary = "条件查询", description = "根据条件分页查询货架信息")
+    public ResultUtil getAllShelvesByCon(@Parameter(description = "查询条件") @RequestBody ShelfSearch shelfSearch) {
         // 分页对象
         Page<Shelf> page = new Page<>(shelfSearch.getPageNo(), shelfSearch.getPageSize());
         // 条件构造器

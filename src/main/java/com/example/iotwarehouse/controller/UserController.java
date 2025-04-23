@@ -9,6 +9,9 @@ import com.example.iotwarehouse.common.UserSearch;
 import com.example.iotwarehouse.mapper.UserMapper;
 import com.example.iotwarehouse.service.IUserService;
 import com.example.iotwarehouse.util.ResultUtil;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,6 +27,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/user")
+@Tag(name = "用户管理", description = "用户信息的增删改查操作")
 public class UserController {
 
     @Resource
@@ -31,23 +35,25 @@ public class UserController {
 
     /**
      * 查询所有未被删除的用户信息
-     * 
+     *
      * @return Result类
      */
+    @Operation(summary = "获取所有用户", description = "查询系统中所有用户的信息")
     @GetMapping("/getAllUsers")
-    public Object getAllUser() {
+    public ResultUtil getAllUser() {
         List<User> users = userMapper.selectList(null);
         return ResultUtil.isSuccess(users);
     }
 
     /**
      * 添加用户
-     * 
+     *
      * @param user User类
      * @return Result类
      */
     @PostMapping("/addUser")
-    public Object addUser(@RequestBody User user) {
+    @Operation(summary = "添加用户", description = "创建新的用户")
+    public ResultUtil addUser(@RequestBody User user) {
         int i = userMapper.insert(user);
         if (i == 1) {
             return ResultUtil.isSuccess(ResultCode.ADD_SUCCESS.getMsg(), null);
@@ -58,12 +64,13 @@ public class UserController {
 
     /**
      * 根据ID更新用户
-     * 
+     *
      * @param user User类
      * @return Result类
      */
     @PostMapping("/updateUser")
-    public Object updateUser(@RequestBody User user) {
+    @Operation(summary = "更新用户", description = "根据ID更新用户信息")
+    public ResultUtil updateUser(@RequestBody User user) {
         int i = userMapper.updateById(user);
         if (i == 1) {
             return ResultUtil.isSuccess(ResultCode.UPDATE_SUCCESS.getMsg(), null);
@@ -74,12 +81,13 @@ public class UserController {
 
     /**
      * 根据ID删除用户
-     * 
+     *
      * @param userId 根据的ID
      * @return ResultUtil
      */
     @PostMapping("/delUser")
-    public Object delUser(Integer userId) {
+    @Operation(summary = "删除用户", description = "根据ID删除用户")
+    public ResultUtil delUser(Integer userId) {
         int i = userMapper.deleteById(userId);
         if (i == 1) {
             return ResultUtil.isSuccess(ResultCode.DELETE_SUCCESS.getMsg(), null);
@@ -90,12 +98,13 @@ public class UserController {
 
     /**
      * 多条件分页查询
-     * 
+     *
      * @param userSearch 查询类
      * @return ResultUtil
      */
     @PostMapping("/getAllUserByCon")
-    public Object getAllUserByCon(@RequestBody UserSearch userSearch) {
+    @Operation(summary = "条件查询", description = "根据条件分页查询用户信息")
+    public ResultUtil getAllUserByCon(@RequestBody UserSearch userSearch) {
         // 分页对象
         Page<User> page = new Page<>(userSearch.getPageNo(), userSearch.getPageSize());
         // 条件构造器
@@ -117,35 +126,38 @@ public class UserController {
 
     /**
      * 登录接口
-     * 
+     *
      * @param userLogin UserLogin类
      * @return ResultUtil
      */
     @PostMapping("/login")
-    public Object login(@RequestBody UserLogin userLogin) {
+    @Operation(summary = "登录接口", description = "输入用户名和密码登录")
+    public ResultUtil login(@RequestBody UserLogin userLogin) {
         return iUserService.loginLogic(userLogin.getUsername(), userLogin.getPassword());
     }
 
     /**
      * 注册接口
-     * 
+     *
      * @param user user类
      * @return ResultUtil
      */
+    @Operation(summary = "注册接口", description = "输入用户名,密码,确认密码,邮箱,同意用户协议后注册")
     @PostMapping("/register")
-    public Object register(@RequestBody User user) {
+    public ResultUtil register(@RequestBody User user) {
         return iUserService.registerLogic(user);
     }
 
     /**
      * 根据邮箱更新用户信息
-     * 
+     *
      * @param email    邮箱
      * @param password 面膜
      * @return ResultUtil
      */
+    @Operation(summary = "通过邮箱更新用户密码", description = "通过邮箱更新用户密码")
     @PostMapping("/updateByEmail")
-    public Object updatePasswordByEmail(@RequestParam("email") String email,
+    public ResultUtil updatePasswordByEmail(@RequestParam("email") String email,
             @RequestParam("password") String password) {
         return iUserService.updatePasswordByEmail(email, password);
     }

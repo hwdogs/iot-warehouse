@@ -39,7 +39,7 @@ public class WarehouseController {
      */
     @GetMapping("/getAllWarehouses")
     @Operation(summary = "获取所有仓库", description = "查询系统中所有仓库的信息")
-    public Object getAllWarehouses() {
+    public ResultUtil getAllWarehouses() {
         List<Warehouse> warehouses = warehouseMapper.selectList(null);
         return ResultUtil.isSuccess(warehouses);
     }
@@ -54,7 +54,7 @@ public class WarehouseController {
      */
     @PostMapping("/addWarehouse")
     @Operation(summary = "添加仓库", description = "创建新的仓库，location字段使用'纬度 经度'格式")
-    public Object addWarehouse(@Parameter(description = "仓库信息") @RequestBody Warehouse warehouse) {
+    public ResultUtil addWarehouse(@Parameter(description = "仓库信息") @RequestBody Warehouse warehouse) {
         int i = warehouseMapper.insert(warehouse);
         if (i == 1) {
             return ResultUtil.isSuccess(ResultCode.ADD_SUCCESS.getMsg(), null);
@@ -73,7 +73,7 @@ public class WarehouseController {
      */
     @PostMapping("/updateWarehouse")
     @Operation(summary = "更新仓库", description = "根据ID更新仓库信息，location字段使用'纬度 经度'格式")
-    public Object updateWarehouse(@Parameter(description = "仓库信息") @RequestBody Warehouse warehouse) {
+    public ResultUtil updateWarehouse(@Parameter(description = "仓库信息") @RequestBody Warehouse warehouse) {
         int i = warehouseMapper.updateById(warehouse);
         if (i == 1) {
             return ResultUtil.isSuccess(ResultCode.UPDATE_SUCCESS.getMsg(), null);
@@ -90,7 +90,7 @@ public class WarehouseController {
      */
     @PostMapping("/delWarehouse")
     @Operation(summary = "删除仓库", description = "根据ID删除仓库")
-    public Object delWarehouse(@Parameter(description = "仓库ID") Integer warehouseId) {
+    public ResultUtil delWarehouse(@Parameter(description = "仓库ID") Integer warehouseId) {
         int i = warehouseMapper.deleteById(warehouseId);
         if (i == 1) {
             return ResultUtil.isSuccess(ResultCode.DELETE_SUCCESS.getMsg(), null);
@@ -107,7 +107,8 @@ public class WarehouseController {
      */
     @PostMapping("/getAllWarehousesByCon")
     @Operation(summary = "条件查询", description = "根据条件分页查询仓库信息")
-    public Object getAllWarehousesByCon(@Parameter(description = "查询条件") @RequestBody WarehouseSearch warehouseSearch) {
+    public ResultUtil getAllWarehousesByCon(
+            @Parameter(description = "查询条件") @RequestBody WarehouseSearch warehouseSearch) {
         // 分页对象
         Page<Warehouse> page = new Page<>(warehouseSearch.getPageNo(), warehouseSearch.getPageSize());
         // 条件构造器

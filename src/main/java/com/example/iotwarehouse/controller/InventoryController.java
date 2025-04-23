@@ -7,6 +7,9 @@ import com.example.iotwarehouse.common.InventorySearch;
 import com.example.iotwarehouse.entity.Inventory;
 import com.example.iotwarehouse.mapper.InventoryMapper;
 import com.example.iotwarehouse.util.ResultUtil;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,7 +17,7 @@ import java.util.List;
 
 /**
  * <p>
- * 前端控制器
+ * 库存管理前端控制器
  * </p>
  *
  * @author hwshou
@@ -22,6 +25,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/inventory")
+@Tag(name = "库存管理", description = "库存信息的增删改查操作")
 public class InventoryController {
 
     @Resource
@@ -33,7 +37,8 @@ public class InventoryController {
      * @return Result类
      */
     @GetMapping("/getAllInventories")
-    public Object getAllInventories() {
+    @Operation(summary = "获取所有库存", description = "查询系统中所有库存的信息")
+    public ResultUtil getAllInventories() {
         List<Inventory> inventories = inventoryMapper.selectList(null);
         return ResultUtil.isSuccess(inventories);
     }
@@ -45,7 +50,8 @@ public class InventoryController {
      * @return Result类
      */
     @PostMapping("/addInventory")
-    public Object addInventory(@RequestBody Inventory inventory) {
+    @Operation(summary = "添加库存", description = "创建新的库存记录")
+    public ResultUtil addInventory(@Parameter(description = "库存信息") @RequestBody Inventory inventory) {
         int i = inventoryMapper.insert(inventory);
         if (i == 1) {
             return ResultUtil.isSuccess(ResultCode.ADD_SUCCESS.getMsg(), null);
@@ -61,7 +67,8 @@ public class InventoryController {
      * @return Result类
      */
     @PostMapping("/updateInventory")
-    public Object updateInventory(@RequestBody Inventory inventory) {
+    @Operation(summary = "更新库存", description = "根据ID更新库存信息")
+    public ResultUtil updateInventory(@Parameter(description = "库存信息") @RequestBody Inventory inventory) {
         int i = inventoryMapper.updateById(inventory);
         if (i == 1) {
             return ResultUtil.isSuccess(ResultCode.UPDATE_SUCCESS.getMsg(), null);
@@ -77,7 +84,8 @@ public class InventoryController {
      * @return ResultUtil
      */
     @PostMapping("/delInventory")
-    public Object delInventory(Integer inventoryId) {
+    @Operation(summary = "删除库存", description = "根据ID删除库存记录")
+    public ResultUtil delInventory(@Parameter(description = "库存ID") @RequestParam Integer inventoryId) {
         int i = inventoryMapper.deleteById(inventoryId);
         if (i == 1) {
             return ResultUtil.isSuccess(ResultCode.DELETE_SUCCESS.getMsg(), null);
@@ -93,7 +101,9 @@ public class InventoryController {
      * @return ResultUtil
      */
     @PostMapping("/getAllInventoriesByCon")
-    public Object getAllInventoriesByCon(@RequestBody InventorySearch inventorySearch) {
+    @Operation(summary = "条件查询", description = "根据条件分页查询库存信息")
+    public ResultUtil getAllInventoriesByCon(
+            @Parameter(description = "查询条件") @RequestBody InventorySearch inventorySearch) {
         // 分页对象
         Page<Inventory> page = new Page<>(inventorySearch.getPageNo(), inventorySearch.getPageSize());
         // 条件构造器

@@ -7,6 +7,9 @@ import com.example.iotwarehouse.common.OperationLogSearch;
 import com.example.iotwarehouse.entity.OperationLog;
 import com.example.iotwarehouse.mapper.OperationLogMapper;
 import com.example.iotwarehouse.util.ResultUtil;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,7 +17,7 @@ import java.util.List;
 
 /**
  * <p>
- * 前端控制器
+ * 操作日志管理前端控制器
  * </p>
  *
  * @author hwshou
@@ -22,6 +25,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/operationLog")
+@Tag(name = "操作日志管理", description = "操作日志信息的增删改查操作")
 public class OperationLogController {
 
     @Resource
@@ -33,7 +37,8 @@ public class OperationLogController {
      * @return Result类
      */
     @GetMapping("/getAllOperationLogs")
-    public Object getAllOperationLogs() {
+    @Operation(summary = "获取所有操作日志", description = "查询系统中所有操作日志的信息")
+    public ResultUtil getAllOperationLogs() {
         List<OperationLog> logs = operationLogMapper.selectList(null);
         return ResultUtil.isSuccess(logs);
     }
@@ -45,7 +50,8 @@ public class OperationLogController {
      * @return Result类
      */
     @PostMapping("/addOperationLog")
-    public Object addOperationLog(@RequestBody OperationLog operationLog) {
+    @Operation(summary = "添加操作日志", description = "创建新的操作日志记录")
+    public ResultUtil addOperationLog(@Parameter(description = "操作日志信息") @RequestBody OperationLog operationLog) {
         int i = operationLogMapper.insert(operationLog);
         if (i == 1) {
             return ResultUtil.isSuccess(ResultCode.ADD_SUCCESS.getMsg(), null);
@@ -61,7 +67,8 @@ public class OperationLogController {
      * @return Result类
      */
     @PostMapping("/updateOperationLog")
-    public Object updateOperationLog(@RequestBody OperationLog operationLog) {
+    @Operation(summary = "更新操作日志", description = "根据ID更新操作日志信息")
+    public ResultUtil updateOperationLog(@Parameter(description = "操作日志信息") @RequestBody OperationLog operationLog) {
         int i = operationLogMapper.updateById(operationLog);
         if (i == 1) {
             return ResultUtil.isSuccess(ResultCode.UPDATE_SUCCESS.getMsg(), null);
@@ -77,7 +84,8 @@ public class OperationLogController {
      * @return ResultUtil
      */
     @PostMapping("/delOperationLog")
-    public Object delOperationLog(Integer logId) {
+    @Operation(summary = "删除操作日志", description = "根据ID删除操作日志")
+    public ResultUtil delOperationLog(@Parameter(description = "日志ID") @RequestParam Integer logId) {
         int i = operationLogMapper.deleteById(logId);
         if (i == 1) {
             return ResultUtil.isSuccess(ResultCode.DELETE_SUCCESS.getMsg(), null);
@@ -93,7 +101,9 @@ public class OperationLogController {
      * @return ResultUtil
      */
     @PostMapping("/getAllOperationLogsByCon")
-    public Object getAllOperationLogsByCon(@RequestBody OperationLogSearch operationLogSearch) {
+    @Operation(summary = "条件查询", description = "根据条件分页查询操作日志信息")
+    public ResultUtil getAllOperationLogsByCon(
+            @Parameter(description = "查询条件") @RequestBody OperationLogSearch operationLogSearch) {
         // 分页对象
         Page<OperationLog> page = new Page<>(operationLogSearch.getPageNo(), operationLogSearch.getPageSize());
         // 条件构造器

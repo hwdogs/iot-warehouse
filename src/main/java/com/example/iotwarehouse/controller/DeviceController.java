@@ -7,6 +7,9 @@ import com.example.iotwarehouse.common.DeviceSearch;
 import com.example.iotwarehouse.entity.Device;
 import com.example.iotwarehouse.mapper.DeviceMapper;
 import com.example.iotwarehouse.util.ResultUtil;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,7 +17,7 @@ import java.util.List;
 
 /**
  * <p>
- * 前端控制器
+ * 设备管理前端控制器
  * </p>
  *
  * @author hwshou
@@ -22,6 +25,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/device")
+@Tag(name = "设备管理", description = "设备信息的增删改查操作")
 public class DeviceController {
 
     @Resource
@@ -33,7 +37,8 @@ public class DeviceController {
      * @return Result类
      */
     @GetMapping("/getAllDevices")
-    public Object getAllDevices() {
+    @Operation(summary = "获取所有设备", description = "查询系统中所有设备的信息")
+    public ResultUtil getAllDevices() {
         List<Device> devices = deviceMapper.selectList(null);
         return ResultUtil.isSuccess(devices);
     }
@@ -45,7 +50,8 @@ public class DeviceController {
      * @return Result类
      */
     @PostMapping("/addDevice")
-    public Object addDevice(@RequestBody Device device) {
+    @Operation(summary = "添加设备", description = "创建新的设备")
+    public ResultUtil addDevice(@Parameter(description = "设备信息") @RequestBody Device device) {
         int i = deviceMapper.insert(device);
         if (i == 1) {
             return ResultUtil.isSuccess(ResultCode.ADD_SUCCESS.getMsg(), null);
@@ -61,7 +67,8 @@ public class DeviceController {
      * @return Result类
      */
     @PostMapping("/updateDevice")
-    public Object updateDevice(@RequestBody Device device) {
+    @Operation(summary = "更新设备", description = "根据ID更新设备信息")
+    public ResultUtil updateDevice(@Parameter(description = "设备信息") @RequestBody Device device) {
         int i = deviceMapper.updateById(device);
         if (i == 1) {
             return ResultUtil.isSuccess(ResultCode.UPDATE_SUCCESS.getMsg(), null);
@@ -77,7 +84,8 @@ public class DeviceController {
      * @return ResultUtil
      */
     @PostMapping("/delDevice")
-    public Object delDevice(Integer deviceId) {
+    @Operation(summary = "删除设备", description = "根据ID删除设备")
+    public ResultUtil delDevice(@Parameter(description = "设备ID") @RequestParam Integer deviceId) {
         int i = deviceMapper.deleteById(deviceId);
         if (i == 1) {
             return ResultUtil.isSuccess(ResultCode.DELETE_SUCCESS.getMsg(), null);
@@ -93,7 +101,8 @@ public class DeviceController {
      * @return ResultUtil
      */
     @PostMapping("/getAllDevicesByCon")
-    public Object getAllDevicesByCon(@RequestBody DeviceSearch deviceSearch) {
+    @Operation(summary = "条件查询", description = "根据条件分页查询设备信息")
+    public ResultUtil getAllDevicesByCon(@Parameter(description = "查询条件") @RequestBody DeviceSearch deviceSearch) {
         // 分页对象
         Page<Device> page = new Page<>(deviceSearch.getPageNo(), deviceSearch.getPageSize());
         // 条件构造器
