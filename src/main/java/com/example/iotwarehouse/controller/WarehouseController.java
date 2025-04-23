@@ -105,7 +105,7 @@ public class WarehouseController {
      * @param warehouseSearch 查询类
      * @return ResultUtil
      */
-    @GetMapping("/getAllWarehousesByCon")
+    @PostMapping("/getAllWarehousesByCon")
     @Operation(summary = "条件查询", description = "根据条件分页查询仓库信息")
     public Object getAllWarehousesByCon(@Parameter(description = "查询条件") @RequestBody WarehouseSearch warehouseSearch) {
         // 分页对象

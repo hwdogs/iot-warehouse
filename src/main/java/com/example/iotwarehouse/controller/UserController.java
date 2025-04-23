@@ -94,7 +94,7 @@ public class UserController {
      * @param userSearch 查询类
      * @return ResultUtil
      */
-    @GetMapping("/getAllUserByCon")
+    @PostMapping("/getAllUserByCon")
     public Object getAllUserByCon(@RequestBody UserSearch userSearch) {
         // 分页对象
         Page<User> page = new Page<>(userSearch.getPageNo(), userSearch.getPageSize());

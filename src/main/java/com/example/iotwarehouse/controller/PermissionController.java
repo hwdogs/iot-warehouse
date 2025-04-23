@@ -92,7 +92,7 @@ public class PermissionController {
      * @param permissionSearch 查询类
      * @return ResultUtil
      */
-    @GetMapping("/getAllPermissionsByCon")
+    @PostMapping("/getAllPermissionsByCon")
     public Object getAllPermissionsByCon(@RequestBody PermissionSearch permissionSearch) {
         // 分页对象
         Page<Permission> page = new Page<>(permissionSearch.getPageNo(), permissionSearch.getPageSize());

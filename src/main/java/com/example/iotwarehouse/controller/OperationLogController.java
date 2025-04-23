@@ -92,7 +92,7 @@ public class OperationLogController {
      * @param operationLogSearch 查询类
      * @return ResultUtil
      */
-    @GetMapping("/getAllOperationLogsByCon")
+    @PostMapping("/getAllOperationLogsByCon")
     public Object getAllOperationLogsByCon(@RequestBody OperationLogSearch operationLogSearch) {
         // 分页对象
         Page<OperationLog> page = new Page<>(operationLogSearch.getPageNo(), operationLogSearch.getPageSize());

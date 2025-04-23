@@ -92,7 +92,7 @@ public class InventoryController {
      * @param inventorySearch 查询类
      * @return ResultUtil
      */
-    @GetMapping("/getAllInventoriesByCon")
+    @PostMapping("/getAllInventoriesByCon")
     public Object getAllInventoriesByCon(@RequestBody InventorySearch inventorySearch) {
         // 分页对象
         Page<Inventory> page = new Page<>(inventorySearch.getPageNo(), inventorySearch.getPageSize());

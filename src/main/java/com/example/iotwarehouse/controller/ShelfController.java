@@ -92,7 +92,7 @@ public class ShelfController {
      * @param shelfSearch 查询类
      * @return ResultUtil
      */
-    @GetMapping("/getAllShelvesByCon")
+    @PostMapping("/getAllShelvesByCon")
     public Object getAllShelvesByCon(@RequestBody ShelfSearch shelfSearch) {
         // 分页对象
         Page<Shelf> page = new Page<>(shelfSearch.getPageNo(), shelfSearch.getPageSize());

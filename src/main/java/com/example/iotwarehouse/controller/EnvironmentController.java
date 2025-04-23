@@ -104,7 +104,7 @@ public class EnvironmentController {
      * @param environmentSearch 查询类
      * @return ResultUtil
      */
-    @GetMapping("/getAllEnvironmentsByCon")
+    @PostMapping("/getAllEnvironmentsByCon")
     public Object getAllEnvironmentsByCon(@RequestBody EnvironmentSearch environmentSearch) {
         // 分页对象
         Page<Environment> page = new Page<>(environmentSearch.getPageNo(), environmentSearch.getPageSize());

@@ -92,7 +92,7 @@ public class DeviceController {
      * @param deviceSearch 查询类
      * @return ResultUtil
      */
-    @GetMapping("/getAllDevicesByCon")
+    @PostMapping("/getAllDevicesByCon")
     public Object getAllDevicesByCon(@RequestBody DeviceSearch deviceSearch) {
         // 分页对象
         Page<Device> page = new Page<>(deviceSearch.getPageNo(), deviceSearch.getPageSize());

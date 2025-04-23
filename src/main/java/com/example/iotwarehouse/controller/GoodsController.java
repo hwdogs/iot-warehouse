@@ -92,7 +92,7 @@ public class GoodsController {
      * @param goodsSearch 查询类
      * @return ResultUtil
      */
-    @GetMapping("/getAllGoodsByCon")
+    @PostMapping("/getAllGoodsByCon")
     public Object getAllGoodsByCon(@RequestBody GoodsSearch goodsSearch) {
         // 分页对象
         Page<Goods> page = new Page<>(goodsSearch.getPageNo(), goodsSearch.getPageSize());
