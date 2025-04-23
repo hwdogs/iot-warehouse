@@ -3,7 +3,9 @@ package com.example.iotwarehouse.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.iotwarehouse.common.ResultCode;
+import com.example.iotwarehouse.common.request.permissionRequest.AddPermissionRequest;
 import com.example.iotwarehouse.common.request.permissionRequest.PermissionSearchRequest;
+import com.example.iotwarehouse.common.request.permissionRequest.UpdatePermissionRequest;
 import com.example.iotwarehouse.entity.Permission;
 import com.example.iotwarehouse.mapper.PermissionMapper;
 import com.example.iotwarehouse.util.ResultUtil;
@@ -46,12 +48,16 @@ public class PermissionController {
     /**
      * 添加权限
      * 
-     * @param permission Permission类
+     * @param request AddPermissionRequest类
      * @return Result类
      */
     @PostMapping("/addPermission")
     @Operation(summary = "添加权限", description = "创建新的权限")
-    public ResultUtil addPermission(@Parameter(description = "权限信息") @RequestBody Permission permission) {
+    public ResultUtil addPermission(@Parameter(description = "权限信息") @RequestBody AddPermissionRequest request) {
+        Permission permission = Permission.builder()
+                .permName(request.getPermName())
+                .module(request.getModule())
+                .build();
         int i = permissionMapper.insert(permission);
         if (i == 1) {
             return ResultUtil.isSuccess(ResultCode.ADD_SUCCESS.getMsg(), null);
@@ -63,12 +69,17 @@ public class PermissionController {
     /**
      * 根据ID更新权限
      * 
-     * @param permission Permission类
+     * @param request UpdatePermissionRequest类
      * @return Result类
      */
     @PostMapping("/updatePermission")
     @Operation(summary = "更新权限", description = "根据ID更新权限信息")
-    public ResultUtil updatePermission(@Parameter(description = "权限信息") @RequestBody Permission permission) {
+    public ResultUtil updatePermission(@Parameter(description = "权限信息") @RequestBody UpdatePermissionRequest request) {
+        Permission permission = Permission.builder()
+                .permId(request.getPermId())
+                .permName(request.getPermName())
+                .module(request.getModule())
+                .build();
         int i = permissionMapper.updateById(permission);
         if (i == 1) {
             return ResultUtil.isSuccess(ResultCode.UPDATE_SUCCESS.getMsg(), null);

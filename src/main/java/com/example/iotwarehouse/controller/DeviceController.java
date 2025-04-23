@@ -3,7 +3,9 @@ package com.example.iotwarehouse.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.iotwarehouse.common.ResultCode;
+import com.example.iotwarehouse.common.request.deviceRequest.AddDeviceRequest;
 import com.example.iotwarehouse.common.request.deviceRequest.DeviceSearchRequest;
+import com.example.iotwarehouse.common.request.deviceRequest.UpdateDeviceRequest;
 import com.example.iotwarehouse.entity.Device;
 import com.example.iotwarehouse.mapper.DeviceMapper;
 import com.example.iotwarehouse.util.ResultUtil;
@@ -46,12 +48,17 @@ public class DeviceController {
     /**
      * 添加设备
      * 
-     * @param device Device类
+     * @param request AddDeviceRequest类
      * @return Result类
      */
     @PostMapping("/addDevice")
     @Operation(summary = "添加设备", description = "创建新的设备")
-    public ResultUtil addDevice(@Parameter(description = "设备信息") @RequestBody Device device) {
+    public ResultUtil addDevice(@Parameter(description = "设备信息") @RequestBody AddDeviceRequest request) {
+        Device device = Device.builder()
+                .type(request.getType())
+                .status(request.getStatus())
+                .lastMaintenance(request.getLastMaintenance())
+                .build();
         int i = deviceMapper.insert(device);
         if (i == 1) {
             return ResultUtil.isSuccess(ResultCode.ADD_SUCCESS.getMsg(), null);
@@ -63,12 +70,18 @@ public class DeviceController {
     /**
      * 根据ID更新设备
      * 
-     * @param device Device类
+     * @param request UpdateDeviceRequest类
      * @return Result类
      */
     @PostMapping("/updateDevice")
     @Operation(summary = "更新设备", description = "根据ID更新设备信息")
-    public ResultUtil updateDevice(@Parameter(description = "设备信息") @RequestBody Device device) {
+    public ResultUtil updateDevice(@Parameter(description = "设备信息") @RequestBody UpdateDeviceRequest request) {
+        Device device = Device.builder()
+                .deviceId(request.getDeviceId())
+                .type(request.getType())
+                .status(request.getStatus())
+                .lastMaintenance(request.getLastMaintenance())
+                .build();
         int i = deviceMapper.updateById(device);
         if (i == 1) {
             return ResultUtil.isSuccess(ResultCode.UPDATE_SUCCESS.getMsg(), null);

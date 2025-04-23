@@ -3,7 +3,9 @@ package com.example.iotwarehouse.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.iotwarehouse.common.ResultCode;
+import com.example.iotwarehouse.common.request.environmentRequest.AddEnvironmentRequest;
 import com.example.iotwarehouse.common.request.environmentRequest.EnvironmentSearchRequest;
+import com.example.iotwarehouse.common.request.environmentRequest.UpdateEnvironmentRequest;
 import com.example.iotwarehouse.entity.Environment;
 import com.example.iotwarehouse.mapper.EnvironmentMapper;
 import com.example.iotwarehouse.util.ResultUtil;
@@ -47,12 +49,20 @@ public class EnvironmentController {
     /**
      * 添加环境数据
      *
-     * @param environment Environment类
+     * @param request AddEnvironmentRequest类
      * @return Result类
      */
     @PostMapping("/addEnvironment")
     @Operation(summary = "添加环境数据", description = "创建新的环境监控数据记录")
-    public ResultUtil addEnvironment(@Parameter(description = "环境数据信息") @RequestBody Environment environment) {
+    public ResultUtil addEnvironment(@Parameter(description = "环境数据信息") @RequestBody AddEnvironmentRequest request) {
+        Environment environment = Environment.builder()
+                .sensorId(request.getSensorId())
+                .temperature(request.getTemperature())
+                .humidity(request.getHumidity())
+                .light(request.getLight())
+                .gas(request.getGas())
+                .note(request.getNote())
+                .build();
         // 设置当前时间作为时间戳，避免timestamp为null
         if (environment.getTimestamp() == null) {
             environment.setTimestamp(LocalDateTime.now());
@@ -68,12 +78,21 @@ public class EnvironmentController {
     /**
      * 更新环境数据
      *
-     * @param environment Environment类
+     * @param request UpdateEnvironmentRequest类
      * @return Result类
      */
     @PostMapping("/updateEnvironment")
     @Operation(summary = "更新环境数据", description = "根据传感器ID和时间戳更新环境数据信息")
-    public ResultUtil updateEnvironment(@Parameter(description = "环境数据信息") @RequestBody Environment environment) {
+    public ResultUtil updateEnvironment(@Parameter(description = "环境数据信息") @RequestBody UpdateEnvironmentRequest request) {
+        Environment environment = Environment.builder()
+                .sensorId(request.getSensorId())
+                .timestamp(request.getTimestamp())
+                .temperature(request.getTemperature())
+                .humidity(request.getHumidity())
+                .light(request.getLight())
+                .gas(request.getGas())
+                .note(request.getNote())
+                .build();
         QueryWrapper<Environment> wrapper = new QueryWrapper<>();
         wrapper.eq("sensor_id", environment.getSensorId())
                 .eq("timestamp", environment.getTimestamp());

@@ -57,7 +57,6 @@ public class User implements Serializable {
      * 0：存在，1：逻辑删除
      */
     @TableField(fill = FieldFill.INSERT)
-    @TableLogic
     @Schema(description = "逻辑删除", hidden = true, requiredMode = Schema.RequiredMode.REQUIRED)
     private Integer deleted;
 

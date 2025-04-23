@@ -3,7 +3,9 @@ package com.example.iotwarehouse.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.iotwarehouse.common.ResultCode;
+import com.example.iotwarehouse.common.request.goodsRequest.AddGoodsRequest;
 import com.example.iotwarehouse.common.request.goodsRequest.GoodsSearchRequest;
+import com.example.iotwarehouse.common.request.goodsRequest.UpdateGoodsRequest;
 import com.example.iotwarehouse.entity.Goods;
 import com.example.iotwarehouse.mapper.GoodsMapper;
 import com.example.iotwarehouse.util.ResultUtil;
@@ -51,7 +53,13 @@ public class GoodsController {
      */
     @PostMapping("/addGoods")
     @Operation(summary = "添加商品", description = "创建新的商品")
-    public ResultUtil addGoods(@Parameter(description = "商品信息") @RequestBody Goods goods) {
+    public ResultUtil addGoods(@Parameter(description = "商品信息") @RequestBody AddGoodsRequest request) {
+        Goods goods = Goods.builder()
+                .rfidTag(request.getRfidTag())
+                .category(request.getCategory())
+                .weight(request.getWeight())
+                .expireDate(request.getExpireDate())
+                .build();
         int i = goodsMapper.insert(goods);
         if (i == 1) {
             return ResultUtil.isSuccess(ResultCode.ADD_SUCCESS.getMsg(), null);
@@ -63,12 +71,19 @@ public class GoodsController {
     /**
      * 根据ID更新商品
      * 
-     * @param goods Goods类
+     * @param request UpdateGoodsRequest类
      * @return Result类
      */
     @PostMapping("/updateGoods")
     @Operation(summary = "更新商品", description = "根据ID更新商品信息")
-    public ResultUtil updateGoods(@Parameter(description = "商品信息") @RequestBody Goods goods) {
+    public ResultUtil updateGoods(@Parameter(description = "商品信息") @RequestBody UpdateGoodsRequest request) {
+        Goods goods = Goods.builder()
+                .goodsId(request.getGoodsId())
+                .rfidTag(request.getRfidTag())
+                .category(request.getCategory())
+                .weight(request.getWeight())
+                .expireDate(request.getExpireDate())
+                .build();
         int i = goodsMapper.updateById(goods);
         if (i == 1) {
             return ResultUtil.isSuccess(ResultCode.UPDATE_SUCCESS.getMsg(), null);

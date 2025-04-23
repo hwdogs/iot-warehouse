@@ -3,7 +3,9 @@ package com.example.iotwarehouse.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.iotwarehouse.common.ResultCode;
+import com.example.iotwarehouse.common.request.operationLogRequest.AddOperationLogRequest;
 import com.example.iotwarehouse.common.request.operationLogRequest.OperationLogSearchRequest;
+import com.example.iotwarehouse.common.request.operationLogRequest.UpdateOperationLogRequest;
 import com.example.iotwarehouse.entity.OperationLog;
 import com.example.iotwarehouse.mapper.OperationLogMapper;
 import com.example.iotwarehouse.util.ResultUtil;
@@ -46,12 +48,18 @@ public class OperationLogController {
     /**
      * 添加操作日志
      * 
-     * @param operationLog OperationLog类
+     * @param request AddOperationLogRequest类
      * @return Result类
      */
     @PostMapping("/addOperationLog")
     @Operation(summary = "添加操作日志", description = "创建新的操作日志记录")
-    public ResultUtil addOperationLog(@Parameter(description = "操作日志信息") @RequestBody OperationLog operationLog) {
+    public ResultUtil addOperationLog(@Parameter(description = "操作日志信息") @RequestBody AddOperationLogRequest request) {
+        OperationLog operationLog = OperationLog.builder()
+                .operationType(request.getOperationType())
+                .goodsId(request.getGoodsId())
+                .deviceId(request.getDeviceId())
+                .operatorId(request.getOperatorId())
+                .build();
         int i = operationLogMapper.insert(operationLog);
         if (i == 1) {
             return ResultUtil.isSuccess(ResultCode.ADD_SUCCESS.getMsg(), null);
@@ -63,12 +71,19 @@ public class OperationLogController {
     /**
      * 根据ID更新操作日志
      * 
-     * @param operationLog OperationLog类
+     * @param request UpdateOperationLogRequest类
      * @return Result类
      */
     @PostMapping("/updateOperationLog")
     @Operation(summary = "更新操作日志", description = "根据ID更新操作日志信息")
-    public ResultUtil updateOperationLog(@Parameter(description = "操作日志信息") @RequestBody OperationLog operationLog) {
+    public ResultUtil updateOperationLog(@Parameter(description = "操作日志信息") @RequestBody UpdateOperationLogRequest request) {
+        OperationLog operationLog = OperationLog.builder()
+                .logId(request.getLogId())
+                .operationType(request.getOperationType())
+                .goodsId(request.getGoodsId())
+                .deviceId(request.getDeviceId())
+                .operatorId(request.getOperatorId())
+                .build();
         int i = operationLogMapper.updateById(operationLog);
         if (i == 1) {
             return ResultUtil.isSuccess(ResultCode.UPDATE_SUCCESS.getMsg(), null);

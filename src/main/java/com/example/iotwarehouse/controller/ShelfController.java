@@ -3,7 +3,9 @@ package com.example.iotwarehouse.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.iotwarehouse.common.ResultCode;
+import com.example.iotwarehouse.common.request.shelfRequest.AddShelfRequest;
 import com.example.iotwarehouse.common.request.shelfRequest.ShelfSearchRequest;
+import com.example.iotwarehouse.common.request.shelfRequest.UpdateSelfRequest;
 import com.example.iotwarehouse.entity.Shelf;
 import com.example.iotwarehouse.mapper.ShelfMapper;
 import com.example.iotwarehouse.util.ResultUtil;
@@ -46,12 +48,19 @@ public class ShelfController {
     /**
      * 添加货架
      * 
-     * @param shelf Shelf类
+     * @param request AddShelfRequest类
      * @return Result类
      */
     @PostMapping("/addShelf")
     @Operation(summary = "添加货架", description = "创建新的货架")
-    public ResultUtil addShelf(@Parameter(description = "货架信息") @RequestBody Shelf shelf) {
+    public ResultUtil addShelf(@Parameter(description = "货架信息") @RequestBody AddShelfRequest request) {
+        Shelf shelf = Shelf.builder()
+                .warehouseId(request.getWarehouseId())
+                .positionX(request.getPositionX())
+                .positionY(request.getPositionY())
+                .positionZ(request.getPositionZ())
+                .capacity(request.getCapacity())
+                .build();
         int i = shelfMapper.insert(shelf);
         if (i == 1) {
             return ResultUtil.isSuccess(ResultCode.ADD_SUCCESS.getMsg(), null);
@@ -63,12 +72,19 @@ public class ShelfController {
     /**
      * 根据ID更新货架
      * 
-     * @param shelf Shelf类
+     * @param request UpdateSelfRequest类
      * @return Result类
      */
     @PostMapping("/updateShelf")
     @Operation(summary = "更新货架", description = "根据ID更新货架信息")
-    public ResultUtil updateShelf(@Parameter(description = "货架信息") @RequestBody Shelf shelf) {
+    public ResultUtil updateShelf(@Parameter(description = "货架信息") @RequestBody UpdateSelfRequest request) {
+        Shelf shelf = Shelf.builder()
+                .shelfId(request.getShelfId())
+                .positionX(request.getPositionX())
+                .positionY(request.getPositionY())
+                .positionZ(request.getPositionZ())
+                .capacity(request.getCapacity())
+                .build();
         int i = shelfMapper.updateById(shelf);
         if (i == 1) {
             return ResultUtil.isSuccess(ResultCode.UPDATE_SUCCESS.getMsg(), null);

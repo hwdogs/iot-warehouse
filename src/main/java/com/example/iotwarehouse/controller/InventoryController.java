@@ -3,7 +3,9 @@ package com.example.iotwarehouse.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.iotwarehouse.common.ResultCode;
+import com.example.iotwarehouse.common.request.inventoryRequest.AddInventoryRequest;
 import com.example.iotwarehouse.common.request.inventoryRequest.InventorySearchRequest;
+import com.example.iotwarehouse.common.request.inventoryRequest.UpdateInventoryRequest;
 import com.example.iotwarehouse.entity.Inventory;
 import com.example.iotwarehouse.mapper.InventoryMapper;
 import com.example.iotwarehouse.util.ResultUtil;
@@ -46,12 +48,17 @@ public class InventoryController {
     /**
      * 添加库存
      * 
-     * @param inventory Inventory类
+     * @param request AddInventoryRequest类
      * @return Result类
      */
     @PostMapping("/addInventory")
     @Operation(summary = "添加库存", description = "创建新的库存记录")
-    public ResultUtil addInventory(@Parameter(description = "库存信息") @RequestBody Inventory inventory) {
+    public ResultUtil addInventory(@Parameter(description = "库存信息") @RequestBody AddInventoryRequest request) {
+        Inventory inventory = Inventory.builder()
+                .goodsId(request.getGoodsId())
+                .shelfId(request.getShelfId())
+                .quantity(request.getQuantity())
+                .build();
         int i = inventoryMapper.insert(inventory);
         if (i == 1) {
             return ResultUtil.isSuccess(ResultCode.ADD_SUCCESS.getMsg(), null);
@@ -63,12 +70,18 @@ public class InventoryController {
     /**
      * 根据ID更新库存
      * 
-     * @param inventory Inventory类
+     * @param request UpdateInventoryRequest类
      * @return Result类
      */
     @PostMapping("/updateInventory")
     @Operation(summary = "更新库存", description = "根据ID更新库存信息")
-    public ResultUtil updateInventory(@Parameter(description = "库存信息") @RequestBody Inventory inventory) {
+    public ResultUtil updateInventory(@Parameter(description = "库存信息") @RequestBody UpdateInventoryRequest request) {
+        Inventory inventory = Inventory.builder()
+                .inventoryId(request.getInventoryId())
+                .goodsId(request.getGoodsId())
+                .shelfId(request.getShelfId())
+                .quantity(request.getQuantity())
+                .build();
         int i = inventoryMapper.updateById(inventory);
         if (i == 1) {
             return ResultUtil.isSuccess(ResultCode.UPDATE_SUCCESS.getMsg(), null);
