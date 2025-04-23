@@ -1,4 +1,4 @@
-package com.example.iotwarehouse.common;
+package com.example.iotwarehouse.common.request.operationLogRequest;
 
 import lombok.Data;
 import java.time.LocalDateTime;
@@ -11,7 +11,7 @@ import io.swagger.v3.oas.annotations.media.Schema.RequiredMode;
  * @date 2025/4/21
  */
 @Data
-public class OperationLogSearch {
+public class OperationLogSearchRequest {
     @Schema(description = "操作类型", example = "调拨", allowableValues = { "入库", "出库", "调拨" })
     private String operationType;
 

@@ -1,4 +1,4 @@
-package com.example.iotwarehouse.common;
+package com.example.iotwarehouse.common.request.environmentRequest;
 
 import lombok.Data;
 import java.math.BigDecimal;
@@ -12,7 +12,7 @@ import io.swagger.v3.oas.annotations.media.Schema.RequiredMode;
  * @date 2025/4/21
  */
 @Data
-public class EnvironmentSearch {
+public class EnvironmentSearchRequest {
     @Schema(description = "传感器ID")
     private Integer sensorId;
 

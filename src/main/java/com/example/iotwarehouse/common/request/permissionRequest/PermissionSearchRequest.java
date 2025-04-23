@@ -1,4 +1,4 @@
-package com.example.iotwarehouse.common;
+package com.example.iotwarehouse.common.request.permissionRequest;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.media.Schema.RequiredMode;
@@ -9,12 +9,12 @@ import lombok.Data;
  * @date 2025/4/21
  */
 @Data
-public class WarehouseSearch {
-    @Schema(description = "仓库名字")
-    private String name;
+public class PermissionSearchRequest {
+    @Schema(description = "权限名称", example = "入库")
+    private String permName;
 
-    @Schema(description = "仓库环境区", example = "常温区", allowableValues = { "常温区", "冷链区", "危险品区" })
-    private String environmentZone;
+    @Schema(description = "所属模块('库存''设备''报表')", example = "库存", allowableValues = { "库存", "设备", "报表" })
+    private String module;
 
     @Schema(description = "第几页", example = "1", requiredMode = RequiredMode.REQUIRED)
     private Integer pageNo;

@@ -1,4 +1,4 @@
-package com.example.iotwarehouse.common;
+package com.example.iotwarehouse.common.request.goodsRequest;
 
 import lombok.Data;
 import java.time.LocalDate;
@@ -11,7 +11,7 @@ import io.swagger.v3.oas.annotations.media.Schema.RequiredMode;
  * @date 2025/4/21
  */
 @Data
-public class GoodsSearch {
+public class GoodsSearchRequest {
     @Schema(description = "rfid", example = "123456aaa")
     private String rfidTag;
 

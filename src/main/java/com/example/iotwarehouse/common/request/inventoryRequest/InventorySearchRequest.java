@@ -1,4 +1,4 @@
-package com.example.iotwarehouse.common;
+package com.example.iotwarehouse.common.request.inventoryRequest;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.media.Schema.RequiredMode;
@@ -9,7 +9,7 @@ import lombok.Data;
  * @date 2025/4/21
  */
 @Data
-public class InventorySearch {
+public class InventorySearchRequest {
     @Schema(description = "货物ID", example = "-1776496639")
     private Integer goodsId;
 
