@@ -18,6 +18,7 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
         this.strictUpdateFill(metaObject, "updateTime", LocalDateTime.class, LocalDateTime.now());
         // 为Environment实体的timestamp字段设置默认值
         this.strictInsertFill(metaObject, "timestamp", LocalDateTime.class, LocalDateTime.now());
+        this.strictInsertFill(metaObject, "deleted", Integer.class, 0);  // 自动填充0
     }
 
     @Override
