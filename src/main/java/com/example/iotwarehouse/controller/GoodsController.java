@@ -3,7 +3,7 @@ package com.example.iotwarehouse.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.iotwarehouse.common.ResultCode;
-import com.example.iotwarehouse.common.GoodsSearch;
+import com.example.iotwarehouse.common.request.goodsRequest.GoodsSearchRequest;
 import com.example.iotwarehouse.entity.Goods;
 import com.example.iotwarehouse.mapper.GoodsMapper;
 import com.example.iotwarehouse.util.ResultUtil;
@@ -102,7 +102,7 @@ public class GoodsController {
      */
     @PostMapping("/getAllGoodsByCon")
     @Operation(summary = "条件查询", description = "根据条件分页查询商品信息")
-    public ResultUtil getAllGoodsByCon(@Parameter(description = "查询条件") @RequestBody GoodsSearch goodsSearch) {
+    public ResultUtil getAllGoodsByCon(@Parameter(description = "查询条件") @RequestBody GoodsSearchRequest goodsSearch) {
         // 分页对象
         Page<Goods> page = new Page<>(goodsSearch.getPageNo(), goodsSearch.getPageSize());
         // 条件构造器

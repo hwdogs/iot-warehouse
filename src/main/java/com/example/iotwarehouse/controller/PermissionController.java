@@ -3,7 +3,7 @@ package com.example.iotwarehouse.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.iotwarehouse.common.ResultCode;
-import com.example.iotwarehouse.common.PermissionSearch;
+import com.example.iotwarehouse.common.request.permissionRequest.PermissionSearchRequest;
 import com.example.iotwarehouse.entity.Permission;
 import com.example.iotwarehouse.mapper.PermissionMapper;
 import com.example.iotwarehouse.util.ResultUtil;
@@ -103,7 +103,7 @@ public class PermissionController {
     @PostMapping("/getAllPermissionsByCon")
     @Operation(summary = "条件查询", description = "根据条件分页查询权限信息")
     public ResultUtil getAllPermissionsByCon(
-            @Parameter(description = "查询条件") @RequestBody PermissionSearch permissionSearch) {
+            @Parameter(description = "查询条件") @RequestBody PermissionSearchRequest permissionSearch) {
         // 分页对象
         Page<Permission> page = new Page<>(permissionSearch.getPageNo(), permissionSearch.getPageSize());
         // 条件构造器

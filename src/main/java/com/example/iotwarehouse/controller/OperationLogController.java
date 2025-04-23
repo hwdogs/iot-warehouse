@@ -3,7 +3,7 @@ package com.example.iotwarehouse.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.iotwarehouse.common.ResultCode;
-import com.example.iotwarehouse.common.OperationLogSearch;
+import com.example.iotwarehouse.common.request.operationLogRequest.OperationLogSearchRequest;
 import com.example.iotwarehouse.entity.OperationLog;
 import com.example.iotwarehouse.mapper.OperationLogMapper;
 import com.example.iotwarehouse.util.ResultUtil;
@@ -103,7 +103,7 @@ public class OperationLogController {
     @PostMapping("/getAllOperationLogsByCon")
     @Operation(summary = "条件查询", description = "根据条件分页查询操作日志信息")
     public ResultUtil getAllOperationLogsByCon(
-            @Parameter(description = "查询条件") @RequestBody OperationLogSearch operationLogSearch) {
+            @Parameter(description = "查询条件") @RequestBody OperationLogSearchRequest operationLogSearch) {
         // 分页对象
         Page<OperationLog> page = new Page<>(operationLogSearch.getPageNo(), operationLogSearch.getPageSize());
         // 条件构造器

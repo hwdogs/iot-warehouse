@@ -3,7 +3,7 @@ package com.example.iotwarehouse.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.iotwarehouse.common.ResultCode;
-import com.example.iotwarehouse.common.DeviceSearch;
+import com.example.iotwarehouse.common.request.deviceRequest.DeviceSearchRequest;
 import com.example.iotwarehouse.entity.Device;
 import com.example.iotwarehouse.mapper.DeviceMapper;
 import com.example.iotwarehouse.util.ResultUtil;
@@ -102,7 +102,7 @@ public class DeviceController {
      */
     @PostMapping("/getAllDevicesByCon")
     @Operation(summary = "条件查询", description = "根据条件分页查询设备信息")
-    public ResultUtil getAllDevicesByCon(@Parameter(description = "查询条件") @RequestBody DeviceSearch deviceSearch) {
+    public ResultUtil getAllDevicesByCon(@Parameter(description = "查询条件") @RequestBody DeviceSearchRequest deviceSearch) {
         // 分页对象
         Page<Device> page = new Page<>(deviceSearch.getPageNo(), deviceSearch.getPageSize());
         // 条件构造器

@@ -3,7 +3,7 @@ package com.example.iotwarehouse.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.iotwarehouse.common.ResultCode;
-import com.example.iotwarehouse.common.EnvironmentSearch;
+import com.example.iotwarehouse.common.request.environmentRequest.EnvironmentSearchRequest;
 import com.example.iotwarehouse.entity.Environment;
 import com.example.iotwarehouse.mapper.EnvironmentMapper;
 import com.example.iotwarehouse.util.ResultUtil;
@@ -117,7 +117,7 @@ public class EnvironmentController {
     @PostMapping("/getAllEnvironmentsByCon")
     @Operation(summary = "条件查询", description = "根据条件分页查询环境数据信息")
     public ResultUtil getAllEnvironmentsByCon(
-            @Parameter(description = "查询条件") @RequestBody EnvironmentSearch environmentSearch) {
+            @Parameter(description = "查询条件") @RequestBody EnvironmentSearchRequest environmentSearch) {
         // 分页对象
         Page<Environment> page = new Page<>(environmentSearch.getPageNo(), environmentSearch.getPageSize());
         // 条件构造器

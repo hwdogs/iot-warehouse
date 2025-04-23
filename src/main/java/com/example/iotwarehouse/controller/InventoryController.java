@@ -3,7 +3,7 @@ package com.example.iotwarehouse.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.iotwarehouse.common.ResultCode;
-import com.example.iotwarehouse.common.InventorySearch;
+import com.example.iotwarehouse.common.request.inventoryRequest.InventorySearchRequest;
 import com.example.iotwarehouse.entity.Inventory;
 import com.example.iotwarehouse.mapper.InventoryMapper;
 import com.example.iotwarehouse.util.ResultUtil;
@@ -103,7 +103,7 @@ public class InventoryController {
     @PostMapping("/getAllInventoriesByCon")
     @Operation(summary = "条件查询", description = "根据条件分页查询库存信息")
     public ResultUtil getAllInventoriesByCon(
-            @Parameter(description = "查询条件") @RequestBody InventorySearch inventorySearch) {
+            @Parameter(description = "查询条件") @RequestBody InventorySearchRequest inventorySearch) {
         // 分页对象
         Page<Inventory> page = new Page<>(inventorySearch.getPageNo(), inventorySearch.getPageSize());
         // 条件构造器

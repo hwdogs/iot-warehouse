@@ -3,7 +3,7 @@ package com.example.iotwarehouse.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.iotwarehouse.common.ResultCode;
-import com.example.iotwarehouse.common.ShelfSearch;
+import com.example.iotwarehouse.common.request.shelfRequest.ShelfSearchRequest;
 import com.example.iotwarehouse.entity.Shelf;
 import com.example.iotwarehouse.mapper.ShelfMapper;
 import com.example.iotwarehouse.util.ResultUtil;
@@ -102,7 +102,7 @@ public class ShelfController {
      */
     @PostMapping("/getAllShelvesByCon")
     @Operation(summary = "条件查询", description = "根据条件分页查询货架信息")
-    public ResultUtil getAllShelvesByCon(@Parameter(description = "查询条件") @RequestBody ShelfSearch shelfSearch) {
+    public ResultUtil getAllShelvesByCon(@Parameter(description = "查询条件") @RequestBody ShelfSearchRequest shelfSearch) {
         // 分页对象
         Page<Shelf> page = new Page<>(shelfSearch.getPageNo(), shelfSearch.getPageSize());
         // 条件构造器
